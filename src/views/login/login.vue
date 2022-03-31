@@ -26,8 +26,8 @@ export default {
   data() {
     return {
       loginForm: {
-        user_id: 'admin',
-        password: 'adminadmin'
+        user_id: '',
+        password: ''
       },
       loginRules: {
         user_id: [{ required: true, message: '用户名必填', trigger: 'blur' }],
@@ -53,6 +53,10 @@ export default {
             sessionStorage.clear()
             sessionStorage.setItem('user_id',res.data.data.userId)
             sessionStorage.setItem('type',res.data.data.type)
+            if (res.data.data.type === 0) {
+              console.log("type: senator")
+              this.$router.push("/senator");
+            }
             if (res.data.data.type === 1) {
               console.log("type: student")
               this.$router.push("/student");
