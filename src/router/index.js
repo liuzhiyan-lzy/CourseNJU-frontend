@@ -5,6 +5,7 @@ import Student from "../views/student/student";
 import Senator from "../views/senator/senator";
 import CreateUser from "../views/senator/createUser";
 import userInfo from "../views/senator/userInfo";
+import courseInfo from "../views/senator/courseInfo";
 
 Vue.use(Router)
 
@@ -32,8 +33,13 @@ export default new Router({
     },
     {
       path: '/senator/user/info',
-      name: 'Info',
+      name: 'UserInfo',
       component: userInfo
+    },
+    {
+      path: '/senator/course/info',
+      name: 'CourseInfo',
+      component: courseInfo
     }
   ]
 })

@@ -53,6 +53,12 @@ export default {
           this.userInfo['userSex'] = '男';
         else
           this.userInfo['userSex'] = '女';
+        if (this.userInfo['type'] === 0)
+          this.userInfo['type'] = '教务员';
+        else if (this.userInfo['type'] === 1)
+          this.userInfo['type'] = '学生';
+        else
+          this.userInfo['type'] = '教师';
         delete(this.userInfo['id']);
       })
       .catch((error) => {
