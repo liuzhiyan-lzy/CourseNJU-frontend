@@ -1,61 +1,24 @@
 <template>
-  <div>
-    <el-button @click="back">返回</el-button>
-    <el-form :model="updateForm" :rules="updateRules">
+  <div class="container" align="center">
 
-      <div class="title-container">
-        <h3 class="title">用户信息</h3>
-      </div>
-      <div>
-        <h3>学号：{{userInfo.userId}}</h3>
-      </div>
+    <div class="title-container">
+      <h3 class="title">用户信息</h3>
+    </div>
 
-      <div v-if="isUpdate === 0">
-        <h3>密码: {{userInfo.password}}</h3>
-        <h3>姓名: {{userInfo.userName}}</h3>
-        <h3>身份证号: {{userInfo.identityId}}</h3>
-        <h3>性别:
-          <div v-if="userInfo.userSex === 1">
-            男
+    <el-button class="button" @click="back">返回</el-button>
+    <el-form :model="userInfo" class="info-container">
+      <el-col :span="12" v-for="(item,index) in userInfo" :key="index">
+        <el-form-item :label="keyMap[index]" class="input-container">
+          <div v-if="index==='userId' || index==='type'" class="input">
+            <el-input v-model="userInfo[index]" disabled="true"></el-input>
           </div>
-          <div v-else>
-            女
+          <div v-else class="input">
+            <el-input v-model="userInfo[index]"></el-input>
           </div>
-        </h3>
-        <h3>学院: {{userInfo.college}}</h3>
-        <h3>邮箱: {{userInfo.email}}</h3>
-        <el-button @click="updateInfo">更新信息</el-button>
-      </div>
-
-
-      <div v-else>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="updateForm.password" type="text" placeholder="请输入密码"></el-input>
         </el-form-item>
+      </el-col>
 
-        <el-form-item label="姓名" prop="user_name">
-          <el-input v-model="updateForm.user_name" type="text" placeholder="请输入姓名"></el-input>
-        </el-form-item>
-
-        <el-form-item label="身份证号" prop="identity_id">
-          <el-input v-model="updateForm.identity_id" type="text" placeholder="请输入身份证号"></el-input>
-        </el-form-item>
-
-        <el-form-item label="性别" prop="user_sex">
-          <el-input v-model="updateForm.user_sex" type="number" placeholder="请输入性别: 1为男, 2为女"></el-input>
-        </el-form-item>
-
-        <el-form-item label="学院" prop="college">
-          <el-input v-model="updateForm.college" type="text" placeholder="请输入学院"></el-input>
-        </el-form-item>
-
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="updateForm.email" type="text" placeholder="请输入邮箱"></el-input>
-        </el-form-item>
-
-        <el-button @click="checkInfo">返回查看</el-button>
-        <el-button @click="submitUpdate">确认更新</el-button>
-      </div>
+      <el-button @click="submitUpdate">确认更新</el-button>
 
     </el-form>
   </div>
@@ -66,24 +29,17 @@ export default {
   name: "UserInfo",
   data() {
     return {
-      isUpdate: 0,
-      userInfo: [],
-      updateForm: {
-        password: '',
-        user_name: '',
-        identity_id: '',
-        user_sex: 1,
-        college: '',
-        email: ''
+      keyMap: {
+        userId: '学号 / 教工号',
+        password: '密码',
+        userName: '姓名',
+        identityId: '身份证号',
+        userSex: '性别',
+        college: '学院',
+        email: '邮箱',
+        type: '类别'
       },
-      updateRules: {
-        password: [{required: true, message: '密码', trigger: 'blur'}],
-        user_name: [{required: true, message: '姓名', trigger: 'blur'}],
-        identity_id: [{required: true, message: '身份证号', trigger: 'blur'}],
-        user_sex: [{required: true, message: '性别', trigger: 'blur'}],
-        college: [{required: true, message: '学院', trigger: 'blur'}],
-        email: [{required: true, message: '邮箱', trigger: 'blur'}]
-      }
+      userInfo: []
     }
   },
   created() {
@@ -93,6 +49,11 @@ export default {
       .then((res) => {
         console.log(res.data);
         this.userInfo = res.data.data;
+        if (this.userInfo['userSex'] === 1)
+          this.userInfo['userSex'] = '男';
+        else
+          this.userInfo['userSex'] = '女';
+        delete(this.userInfo['id']);
       })
       .catch((error) => {
         console.log(error);
@@ -102,21 +63,19 @@ export default {
     back() {
       this.$router.push("/senator");
     },
-    updateInfo() {
-      this.isUpdate = 1;
-    },
-    checkInfo() {
-      this.isUpdate = 0;
-    },
     submitUpdate() {
       var params = new URLSearchParams();
+      if (this.userInfo['userSex'] === '男')
+        this.userInfo['userSex'] = 1;
+      else
+        this.userInfo['userSex'] = 2;
       params.append('user_id', this.userInfo.userId);
-      params.append('password', this.updateForm.password);
-      params.append('user_name', this.updateForm.user_name);
-      params.append('identity_id', this.updateForm.identity_id);
-      params.append('user_sex', this.updateForm.user_sex);
-      params.append('college', this.updateForm.college);
-      params.append('email', this.updateForm.email);
+      params.append('password', this.userInfo.password);
+      params.append('user_name', this.userInfo.userName);
+      params.append('identity_id', this.userInfo.identityId);
+      params.append('user_sex', this.userInfo.userSex);
+      params.append('college', this.userInfo.college);
+      params.append('email', this.userInfo.email);
       this.axios.post('/user/update', params)
         .then((res) => {
           console.log(res.data);
@@ -130,6 +89,54 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+.container {
+  min-height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  overflow: hidden;
+  position: relative;
+  max-width: 100%;
+  padding: 60px 35px 0;
+
+  .title-container {
+    position: relative;
+
+    .title {
+      font-size: 40px;
+      color: #000000;
+      margin: 0 auto 40px auto;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+
+  .button {
+    margin: 0 auto 20px auto;
+  }
+
+  .info-container {
+
+    .info {
+      padding-left: 500px;
+      font-size: 20px;
+      text-align: left;
+      margin: 20px 0 0 0;
+    }
+  }
+
+
+  .input-container {
+    padding: 0 300px;
+
+    .input {
+      width: 80%;
+      left: 100px;
+      position: absolute;
+    }
+  }
+
+}
 
 </style>
