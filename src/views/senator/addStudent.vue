@@ -22,7 +22,15 @@
       <br/>
       <br/>
       <br/>
-      <el-button class="button" @click="addFile">上传文件</el-button>
+      <el-upload
+        style="display: inline"
+        :show-file-list="false"
+        :on-success="onSuccess"
+        :on-error="onError"
+        :before-upload="beforeUpload"
+        action="/course/add-students">
+        <el-button type="success" :disabled="!enabledUploadBtn">上传文件</el-button>
+      </el-upload>
       <br/>
       <br/>
       <br/>
@@ -38,7 +46,8 @@ export default {
     return {
       addStudentInfo: {
         student_id: ''
-      }
+      },
+      enabledUploadBtn: true
     }
   },
   methods: {
@@ -55,11 +64,21 @@ export default {
           console.log(error);
         });
     },
-    addFile() {
-
-    },
     back() {
       this.$router.push("/senator/course/info");
+    },
+    onSuccess(response, file, fileList) {
+      this.enabledUploadBtn = true;
+      this.btnText = '数据导入';
+      this.$message.info("上传成功");
+    },
+    onError(err, file, fileList) {
+      this.enabledUploadBtn = true;
+      this.btnText = '数据导入';
+    },
+    beforeUpload(file) {
+      this.enabledUploadBtn = false;
+      this.btnText = '正在导入';
     }
   }
 }

@@ -111,7 +111,7 @@ export default {
     onSuccess(response, file, fileList) {
       this.enabledUploadBtn = true;
       this.btnText = '数据导入';
-      this.$message.info("导入成功");
+      this.$message.info("上传成功");
     },
     onError(err, file, fileList) {
       this.enabledUploadBtn = true;
