@@ -85,6 +85,7 @@ export default {
       this.axios.post('/user/update', params)
         .then((res) => {
           console.log(res.data);
+          this.$message.info("更新成功");
           this.$router.push("/senator/user/info");
         })
         .catch((error) => {

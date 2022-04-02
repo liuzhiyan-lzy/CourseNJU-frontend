@@ -67,6 +67,7 @@ export default {
       this.axios.post('/course/update', params)
         .then((res) => {
           console.log(res.data);
+          this.$message.info("更新成功");
           this.$router.push("/senator/course/info");
         })
         .catch((error) => {
@@ -74,7 +75,7 @@ export default {
         });
     },
     addStudent() {
-
+      this.$router.push("/senator/course/info/add");
     }
   }
 }

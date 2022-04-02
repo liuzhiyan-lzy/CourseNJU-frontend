@@ -6,6 +6,8 @@ import Senator from "../views/senator/senator";
 import CreateUser from "../views/senator/createUser";
 import userInfo from "../views/senator/userInfo";
 import courseInfo from "../views/senator/courseInfo";
+import CreateCourse from "../views/senator/createCourse";
+import AddStudent from "../views/senator/addStudent";
 
 Vue.use(Router)
 
@@ -40,6 +42,16 @@ export default new Router({
       path: '/senator/course/info',
       name: 'CourseInfo',
       component: courseInfo
+    },
+    {
+      path: '/senator/course',
+      name: 'CreateCourse',
+      component: CreateCourse
+    },
+    {
+      path: '/senator/course/info/add',
+      name: 'AddStudent',
+      component: AddStudent
     }
   ]
 })
