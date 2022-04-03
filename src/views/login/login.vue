@@ -65,7 +65,7 @@ export default {
       this.axios.post('/user/login', params)
         .then((res)=>{
           if (res.data.code === 404) {
-            console.log("用户不存在")
+            this.$message.error(res.data.message)
           }
           if (res.data.code === 200){
             console.log("登录成功")

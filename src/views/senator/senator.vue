@@ -6,6 +6,9 @@
     </div>
 
     <div v-if="page_type === 0" align="center">
+      <el-button @click="logOut">登出</el-button>
+      <br/>
+      <br/>
       <el-button class="button-container" @click="toUserPage">用户管理</el-button>
       <br/>
       <el-button class="button-container" @click="toCoursePage">课程管理</el-button>
@@ -78,6 +81,9 @@ export default {
     },
     back() {
       this.page_type = 0
+    },
+    logOut() {
+      this.$router.push("/");
     },
     createUser() {
       this.$router.push("/senator/user");
