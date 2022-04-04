@@ -13,7 +13,7 @@
       <el-table class="table-container" :data="gradeData" style="width: 100%">
         <el-table-column prop="courseId" label="课程号" width="180"></el-table-column>
         <el-table-column prop="courseName" label="课程名" width="180"></el-table-column>
-        <el-table-column prop="courseStatus" label="课程状态" width="180">
+        <el-table-column prop="courseStatus" label="课程状态" width="150">
           <template slot-scope="scope">
             <p v-if="scope.row.gradeStatus===0">
               未发布
@@ -74,12 +74,21 @@
             <p v-if="scope.row.gradeStatus===1">
               <el-button @click="confirmGrade(scope.row.gradeId)">确认</el-button>
             </p>
+            <p v-else>
+              <el-button disabled="true">确认</el-button>
+            </p>
           </template>
         </el-table-column>
         <el-table-column prop="" label="反馈异议" width="100">
           <template slot-scope="scope">
             <p v-if="scope.row.gradeStatus===1">
-              <el-button @click="gradeReview(scope.row.gradeId)">反馈</el-button>
+              <el-button @click="gradeReview(scope.row.gradeId)">提交反馈</el-button>
+            </p>
+            <p v-else-if="scope.row.gradeStatus===2">
+              <el-button @click="gradeReview(scope.row.gradeId)">查看反馈</el-button>
+            </p>
+            <p v-else>
+              <el-button disabled="true">提交反馈</el-button>
             </p>
           </template>
         </el-table-column>
@@ -103,7 +112,7 @@ export default {
       .then((res) => {
         console.log(res.data);
         this.gradeData = res.data.data;
-        delete(this.courseInfo['id']);
+        console.log(this.gradeData);
       })
       .catch((error) => {
         console.log(error);
@@ -130,7 +139,8 @@ export default {
         });
     },
     gradeReview(grade_id) {
-
+      sessionStorage.setItem('grade_id', grade_id);
+      this.$router.push('/student/grade');
     }
   }
 }

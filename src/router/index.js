@@ -9,6 +9,7 @@ import courseInfo from "../views/senator/courseInfo";
 import CreateCourse from "../views/senator/createCourse";
 import AddStudent from "../views/senator/addStudent";
 import StudentInfo from "../views/student/studentInfo";
+import StudentGrade from "../views/student/studentGrade";
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/student/info',
       name: 'StudentInfo',
       component: StudentInfo
+    },
+    {
+      path: '/student/grade',
+      name: 'StudentGrade',
+      component: StudentGrade
     }
   ]
 })
