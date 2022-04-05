@@ -57,7 +57,12 @@ export default {
       this.axios.post('/course/add', params)
         .then((res) => {
           console.log(res.data);
-          this.$router.push("/senator");
+          if (res.data.code === 404) {
+            this.$message.error(res.data.message);
+          } else {
+            this.$message.info("创建成功");
+            this.$router.push("/senator");
+          }
         })
         .catch((error) => {
           console.log(error);

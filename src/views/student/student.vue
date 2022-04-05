@@ -131,12 +131,12 @@ export default {
       this.axios.post('/grade/confirm', params)
         .then((res) => {
           console.log(res.data);
-          this.$message.info("确认成功");
-          this.$router.push("/student");
+          this.$router.go(0);
         })
         .catch((error) => {
           console.log(error);
         });
+      this.$message.info("确认成功");
     },
     gradeReview(grade_id) {
       sessionStorage.setItem('grade_id', grade_id);

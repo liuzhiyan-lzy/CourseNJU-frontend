@@ -10,6 +10,10 @@ import CreateCourse from "../views/senator/createCourse";
 import AddStudent from "../views/senator/addStudent";
 import StudentInfo from "../views/student/studentInfo";
 import StudentGrade from "../views/student/studentGrade";
+import Teacher from "../views/teacher/teacher";
+import TeacherInfo from "../views/teacher/teacherInfo";
+import TeacherGrade from "../views/teacher/teacherGrade";
+import TeacherReview from "../views/teacher/teacherReview";
 
 Vue.use(Router)
 
@@ -64,6 +68,26 @@ export default new Router({
       path: '/student/grade',
       name: 'StudentGrade',
       component: StudentGrade
+    },
+    {
+      path: '/teacher',
+      name: 'Teacher',
+      component: Teacher
+    },
+    {
+      path: '/teacher/info',
+      name: 'TeacherInfo',
+      component: TeacherInfo
+    },
+    {
+      path: '/teacher/grade',
+      name: 'TeacherGrade',
+      component: TeacherGrade
+    },
+    {
+      path: '/teacher/review',
+      name: 'TeacherReview',
+      component: TeacherReview
     }
   ]
 })
