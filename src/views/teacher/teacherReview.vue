@@ -144,7 +144,7 @@ export default {
                 console.log(res.data);
                 if (res.data.code === 200) {
                   this.$message.info("提交成功");
-                  this.$router.push('teacher/grade');
+                  this.$router.push('/teacher/grade');
                 } else {
                   this.$message.error(res.data.message);
                 }
